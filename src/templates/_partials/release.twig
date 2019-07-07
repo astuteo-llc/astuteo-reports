@@ -1,0 +1,36 @@
+<article class="astuteo-reports__release">
+    {# Release Info #}
+    <div class="astuteo-reports__release__date">{{ item.created_at|date('m/d/Y') }}</div>
+    <div class="astuteo-reports__release__version">Version: {{ item.tag_name }}</div>
+
+
+    {% if release %}
+        <h2>{{ release.name }}</h2>
+        {% if release.draft %}Draft{% endif %}
+        {% if release.prerelease %}Pre release{% endif %}
+
+        {{ release.published_at }}
+        {{ release.body|markdown }}
+    {% endif %}
+
+
+
+
+    <div class="astuteo-reports__release__body">{{ item.body|markdown }}</div>
+    <div class="astuteo-reports__commits">
+    {% if nextDate %}
+        <ul>
+        {% for item in craft.astuteoReports.gitCommitsBetween({
+            since: nextDate,
+            until: item.created_at
+        }) %}
+            {% set commit = craft.astuteoReports.gitCommitLabeled(item.commit.message) %}
+            <li class="astuteo-reports__commit astuteo-reports__commit--{{ commit.tag }}">
+                <div class="astuteo-reports__commit__tag astuteo-reports__commit__tag--{{ commit.tag|default('empty') }}">{{ commit.tag }}</div>
+                <div class=astuteo-reports__commit__message">{{ commit.message|markdown }}</div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+</article>

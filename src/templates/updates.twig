@@ -1,0 +1,54 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Astuteo Reports" %}
+
+{% do view.registerAssetBundle("astuteo\\reports\\assetbundles\\gitreport\\AstuteoGithubAsset") %}
+{% set tabsShow = [] %}
+
+{% set settings = craft.astuteoReports.astuteoReportsSettings %}
+
+{% set selectedSubnavItem = 'updates' %}
+
+
+{% set tabs = tabsShow %}
+
+{% block content %}
+    <div id="git">
+        <h1>{{ settings.titleGitReporter|default('Updates') }}</h1>
+        {% if settings.descriptionGitReporter %}
+            <p class="astuteo-reports__intro">
+                {{ settings.descriptionGitReporter|markdown }}
+            </p>
+        {% endif %}
+        <hr>
+
+        {% cache %}
+            <ul>
+                {% set tags = craft.astuteoReports.gitTags(10) %}
+                {% set tagItems = tags.items %}
+                {% for item in tagItems %}
+                    <li>
+                        {% set release = craft.astuteoReports.gitReleaseByTag(item.name) %}
+
+                        {% set thisCommit = craft.astuteoReports.gitCommitSingle(item.commit.sha) %}
+                        {% if not loop.last %}
+                            {% set nextTag = tagItems[loop.index] %}
+                            {% set nextCommit = craft.astuteoReports.gitCommitSingle(nextTag.commit.sha) %}
+                            {% set nextCommitDate = nextCommit.commit.committer.date %}
+                        {% endif %}
+
+                        {% include "astuteo-reports/_partials/release-by-tag.twig" with {
+                            item: item,
+                            nextDate: nextCommitDate|default(false),
+                            startDate: thisCommit.commit.committer.date,
+                            release: release
+                        } %}
+                    </li>
+                {% endfor %}
+                <li class="astuteo-reports__old-releases">
+                    <strong>{{ tags.notShown }}</strong> Older Releases
+                </li>
+            </ul>
+        {% endcache %}
+    </div>
+{% endblock %}

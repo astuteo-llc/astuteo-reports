@@ -1,0 +1,10 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Astuteo Reports" %}
+{% do view.registerAssetBundle("astuteo\\reports\\assetbundles\\seo\\AstuteoReportsAsset") %}
+
+{% block content %}
+<div id="seo">
+    {% include "astuteo-reports/_seo.twig" %}
+</div>
+{% endblock %}

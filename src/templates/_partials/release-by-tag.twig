@@ -1,0 +1,59 @@
+{#
+<article class="astuteo-reports__release">
+    <div class="astuteo-reports__release__date">{{ item.created_at|date('m/d/Y') }}</div>
+
+    <div class="astuteo-reports__release__version">Version: {{ item.tag_name }}</div>
+    {% if item.name %}<div class="astuteo-reports__release__title">{{ item.name }}</div>{% endif %}
+
+    <div class="astuteo-reports__release__body">{{ item.body|markdown }}</div>
+    <div class="astuteo-reports__commits">
+    {% if nextDate %}
+        <ul>
+        {% for item in craft.astuteoReports.gitCommitsBetween({
+            since: nextDate,
+            until: item.created_at
+        }) %}
+            {% set commit = craft.astuteoReports.gitCommitLabeled(item.commit.message) %}
+            <li class="astuteo-reports__commit astuteo-reports__commit--{{ commit.tag }}">
+                <div class="astuteo-reports__commit__tag astuteo-reports__commit__tag--{{ commit.tag|default('empty') }}">{{ commit.tag }}</div>
+                <div class=astuteo-reports__commit__message">{{ commit.message|markdown }}</div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+</article>
+
+#}
+
+<article class="astuteo-reports__release">
+    <div class="astuteo-reports__release__date">{{ startDate|date('l, F jS, Y') }}</div>
+    <div class="astuteo-reports__release__version">Version: {{ item.name }} {% if release %}&mdash; {{ release.name }}{% endif %}</div>
+
+    {% if release %}
+        <div class="astuteo-reports__release__info">
+            <div class="astuteo-reports__release__message">
+                <strong>Notes:</strong><br>
+                {{ release.body|markdown }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="astuteo-reports__commits">
+        {% if nextDate %}
+            <ul>
+                {% for item in craft.astuteoReports.gitCommitsBetween({
+                    since: nextDate,
+                    until: startDate
+                }) %}
+                    {% if not loop.last %}{# The last item will be the same as the first in the next group between the two dates #}
+                    {% set commit = craft.astuteoReports.gitCommitLabeled(item.commit.message) %}
+                    <li class="astuteo-reports__commit astuteo-reports__commit--{{ commit.tag }}">
+                        <div class="astuteo-reports__commit__tag astuteo-reports__commit__tag--{{ commit.tag|default('empty') }}">{{ commit.tag }}</div>
+                        <div class="astuteo-reports__commit__message">{{ commit.message|markdown|nl2br }}</div>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</article>

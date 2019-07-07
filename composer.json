@@ -1,0 +1,28 @@
+{
+  "name": "astuteo/reports",
+  "description": "Reporting",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Astuteo",
+      "homepage": "https://astuteo.com"
+    }
+  ],
+  "require": {
+    "craftcms/cms": "^3.1.0",
+    "knplabs/github-api": "^2.11",
+    "php-http/guzzle6-adapter": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "astuteo\\reports\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "astuteo-reports",
+    "name": "Astuteo Reports",
+    "documentationUrl": "https://github.com/developer/repo/blob/master/README.md"
+  }
+}

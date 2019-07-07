@@ -1,0 +1,35 @@
+<tr id="reportsEdit-{{ item.id }}" class="astuteo-reports__seo-entry">
+    <td class="astuteo-reports__seo-entry--col1">
+        <a href="{{ item.cpEditUrl }}">
+            <h3>{{ item.title }}</h3>
+        </a>
+    </td>
+
+    <td class="astuteo-reports__seo-entry--col2">
+
+
+
+            <div class="astuteo-reports__seo-entry__edit">
+                {# Title Info #}
+                <div class="field astuteo-reports__seo-entry__edit--col1">
+                    <div class="heading">
+                        <label for="title">SEO Title</label>
+                    </div>
+                    <div class="ltr">
+                        {{ item.seoTitle|default('<span class="astuteo-reports__seo-entry__default">Defaults to ' ~ item.title ~ '</span>')|raw }}
+                    </div>
+                </div>
+
+                {# Description #}
+                <div class="field astuteo-reports__seo-entry__edit--col2">
+                    <div class="heading">
+                        <label for="title">SEO Description</label>
+                    </div>
+                    <div class="ltr">
+                        {{ item.seoDescription|default('<span class="astuteo-reports__seo-entry__default">Auto generated from content</span>')|raw }}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </td>
+</tr>

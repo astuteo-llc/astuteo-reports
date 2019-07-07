@@ -1,0 +1,98 @@
+{% set sectionHandles = craft.app.plugins.getPlugin('astuteo-reports').settings.seoAuditSections %}
+{% set allowSeoEdit = craft.app.plugins.getPlugin('astuteo-reports').settings.allowQuickSeoEdit %}
+{% set selectedSection = craft.app.request.getParam('section') %}
+{% set selectedSectionType = craft.app.request.getParam('type') %}
+
+<nav class="astuteo-reports__seo__section">
+    <ul>
+        {% for handle in sectionHandles %}
+            <li class="{% if handle[0] == selectedSection and handle[1] == selectedSectionType %} astuteo-reports__seo__section--active{% endif %}">
+                <a href="/admin/astuteo-reports?section={{ handle[0] }}&type={{ handle[1] }}">
+                    {% if handle[1] == 'entry' %}
+                        {% set thisSection = craft.sections.sectionByHandle(handle[0]) %}
+                    {% elseif handle[1] == 'category' %}
+                        {% set thisSection = craft.categoryGroups.groupByHandle(handle[0]) %}
+                    {% endif %}
+                    {% if thisSection|length %}
+                        {{ thisSection.name }}
+                    {% else %}
+                        {{ handle[0] }} not Defined
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+
+
+{% if allowSeoEdit %}
+    <div class="astuteo-reports__alert">
+        Quick edit function is working, but it is lightly tested. Editing the values will currently require saving each edit individually and waiting for the save is complete.
+    </div>
+{% endif %}
+
+{% set activeHandle = 'company' %}
+{% if selectedSection %}
+    {% set activeHandle = selectedSection %}
+{% endif %}
+
+
+{% if selectedSectionType == 'entry' %}
+    {% set section = craft.sections.sectionByHandle(activeHandle) %}
+    {% set entries = craft.entries.section(section).all() %}
+{% elseif selectedSectionType == 'category' %}
+    {% set section = craft.categoryGroups.groupByHandle(activeHandle) %}
+    {% set entries = craft.categories.group(section).all() %}
+{% elseif selectedSection == '' %}
+    {# Figure out first section, probably better way to handle this #}
+    {% set firstSection = sectionHandles[1] %}
+    {% if firstSection[1] == 'entry' %}
+        {% set selectedSectionType = 'entry' %}
+        {% set section = craft.sections.sectionByHandle(firstSection[0]) %}
+        {% set entries = craft.entries.section(section).all() %}
+    {% elseif firstSection[1] == 'category' %}
+        {% set selectedSectionType = 'category' %}
+        {% set section = craft.categoryGroups.groupByHandle(firstSection[0]) %}
+        {% set entries = craft.categories.group(section).all() %}
+    {% endif %}
+{% else %}
+    {% set section = null %}
+{% endif %}
+
+
+{% if section|default(null) %}
+    {% if allowSeoEdit %}
+        <h2>{{ section.name }}</h2>
+        <table class="data fullwidth collapsible">
+            <tbody>
+            <thead>
+            <tr>
+                <th>Entry Title</th>
+                <th>SEO</th>
+            </tr>
+            </thead>
+            {% for item in entries %}
+                {% include 'astuteo-reports/_partials/seo-item-edit.twig' with { item: item, type: selectedSectionType } %}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>{{ section.name }}</h2>
+        <table class="data fullwidth collapsible">
+            <tbody>
+            <thead>
+            <tr>
+                <th>Entry Title</th>
+                <th>SEO</th>
+            </tr>
+            </thead>
+            {% for item in entries %}
+                {% include 'astuteo-reports/_partials/seo-item-review.twig' with { item: item } %}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% else %}
+    Unable to find Craft Entries or Categories section for <strong>{{ activeHandle }}</strong>. Please check the settings.
+{% endif %}
+

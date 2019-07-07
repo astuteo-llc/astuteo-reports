@@ -1,0 +1,110 @@
+{% import '_includes/forms' as forms %}
+{#
+{{ forms.textField({
+    label: 'SEO Secions',
+    instructions: 'Sections to List',
+    name: 'seoAuditSections',
+    value: settings.seoAuditSections,
+}) }}n
+#}
+
+
+
+
+
+<h2>SEO Audit Tool</h2>
+{{ forms.lightswitchField({
+    label: 'Show SEO Section',
+    name: 'loadSeoAudit',
+    on: settings.loadSeoAudit,
+    first: true
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Allow Quick Edit (Beta)',
+    name: 'allowQuickSeoEdit',
+    on: settings.allowQuickSeoEdit,
+}) }}
+
+
+{{ forms.editableTableField({
+    label: 'Sections for SEO Listing',
+    id: 'seoHandles',
+    name: 'seoAuditSections',
+    addRowLabel: 'Add a Section',
+    cols: [
+        {
+            type: 'singleline',
+            heading: 'Section Handle'
+        },
+        {
+            type: 'select',
+            heading: 'Section Type',
+            width: '100px',
+            options: [
+                { label: 'Entry', value: 'entry' },
+                { label: 'Category', value: 'category' }
+            ]
+        },
+    ],
+        rows: settings.seoAuditSections
+
+}) }}
+
+
+<h2>Git Reporter</h2>
+{{ forms.lightswitchField({
+    label: 'Show Git Report',
+    instructions: 'A simple feed from Github.com for the project',
+    name: 'showGitReporter',
+    on: settings.showGitReporter,
+    first: true
+}) }}
+
+{{ forms.textField({
+    label: 'Title',
+    name: 'titleGitReporter',
+    value: settings.titleGitReporter
+}) }}
+
+<h3>Description</h3>
+{{ forms.textArea({
+    label: 'Description',
+    name: 'descriptionGitReporter',
+    value: settings.descriptionGitReporter
+}) }}
+
+{{ forms.textField({
+    label: 'Repository User',
+    name: 'repoUser',
+    value: settings.repoUser
+}) }}
+
+{{ forms.textField({
+    label: 'Repository Handle',
+    name: 'repoHandle',
+    value: settings.repoHandle
+}) }}
+
+{{ forms.textField({
+    label: 'Secret',
+    instructions: 'To create a feed for a private repo, go here and generate a secret key URL TO GITHUB',
+    name: 'repoSecret',
+    value: settings.repoSecret
+}) }}
+
+<h2>Other Tweaks</h2>
+{{ forms.lightswitchField({
+    label: 'Apply Admin Tweaks',
+    instructions: 'If toggled on, minor tweaks will be applied across the entire admin',
+    name: 'loadCpTweaks',
+    on: settings.loadCpTweaks,
+    first: true
+}) }}
+
+{{ forms.textField({
+    label: 'CP Label',
+    instructions: 'Adjust the name of the plugin in the admin sidebar',
+    name: 'cpLabel',
+    value: settings.cpLabel
+}) }}

@@ -1,0 +1,111 @@
+/* @override 
+	https://pjpower.hs.test/cpresources/482226f7/css/astuteo-git-report.css?* */
+
+.astuteo-reports__release {
+	margin-bottom: 1em;
+	padding-bottom: 1em;
+	border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+}
+.astuteo-reports__commits {
+	margin-top: 1.5em;
+
+}
+.astuteo-reports__commit {
+	display: flex;
+	color: rgba(0,0,0,.5);
+	margin-bottom: .3em;
+	font-size: .9em;
+}
+.astuteo-reports__commit__tag {
+	padding: .5em 1em;
+	margin-right: 1em;
+	line-height: 1;
+	display: inline-block;
+	font-size: 0.7em;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: rgba(0,0,0,.1);
+	border-radius: 2px;
+	color: rgba(0,0,0,.4);
+	min-width: 50px;
+	text-align: center;
+}
+.astuteo-reports__commit__tag--improve {
+	background-color: #fafbc7;
+	color: #b39a00;
+}
+.astuteo-reports__commit__tag--add {
+	background-color: #b9f4f8;
+	color: #229ba5;
+}
+.astuteo-reports__commit__tag--fix {
+	background-color: #fcf3e2;
+	color: #df8e00;
+}
+.astuteo-reports__commit__tag--empty {
+	background-color: transparent;
+}
+.astuteo-reports__commit__tag--update {
+	background-color: #cef5ce;
+	color: #6b906b;
+}
+.astuteo-reports__commit__tag--remove {
+	background-color: #f4c4c4;
+	color: #d34a4a;
+}
+.astuteo-reports__commit__message br {
+	display: none;
+}
+.astuteo-reports__commit__message li br {
+	display: block;
+}
+.astuteo-reports__commit__message h1 {
+	font-size: 1em;
+	margin:.4em 0;
+}
+.astuteo-reports__commit__tag--merge {
+	background-color: transparent;
+	text-align: right;
+	border-right: 2px solid #a29eff;
+	border-radius: 0;
+	color: #9c98ec;
+	padding-left: calc(1em - 2px);
+}
+.astuteo-reports__release__date {
+	color: rgba(0,0,0,.4);
+	font-size: .8em;
+}
+.astuteo-reports__release__version {
+	font-size: 1.4em;
+	margin-top: .1em;
+	margin-bottom: .2em;
+}
+.astuteo-reports__release__message {
+	margin: 1em 0;
+}
+.astuteo-reports__release__message ul {
+	list-style: disc;
+	padding-left: 1em;
+	margin: .3em 0 2em .5em;
+}
+.astuteo-reports__release__title {
+	font-size: 1.4em;
+	margin-bottom: .5em;
+}
+.astuteo-reports__commit p {
+	margin: 0;
+}
+
+.astuteo-reports__old-releases {
+	text-align: center;
+	background-color: #f1f4f8;
+	font-size: 1em;
+	padding: 1em;
+	margin-top: 1em;
+}
+.astuteo-reports__old-releases strong {
+	background-color: #fff;
+	padding: .5em 1em;
+	margin-right: .2em;
+	border-radius: 5em;
+}

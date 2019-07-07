@@ -1,0 +1,47 @@
+<tr id="reportsEdit-{{ item.id }}" class="astuteo-reports__seo-entry">
+    <td class="astuteo-reports__seo-entry--col1">
+        <a href="{{ item.cpEditUrl }}">
+            <h3>{{ item.title }}</h3>
+        </a>
+    </td>
+
+    <td class="astuteo-reports__seo-entry--col2">
+        <form method="post" accept-charset="UTF-8" style="min-width: 45em">
+            {{ csrfInput() }}
+            {% if type == 'entry' %}
+            <input type="hidden" name="action" value="entries/save-entry">
+            <input type="hidden" name="entryId" value="{{ item.id }}">
+            {% elseif type == 'category' %}
+                <input type="hidden" name="action" value="categories/save-category">
+                <input type="hidden" name="categoryId" value="{{ item.id }}">
+            {% endif %}
+            {{ redirectInput(craft.app.request.url ~ '#reportsEdit-' ~ item.id) }}
+
+
+            <div class="astuteo-reports__seo-entry__edit">
+                {# Title Info #}
+                <div class="field astuteo-reports__seo-entry__edit--col1">
+                    <div class="heading">
+                        <label for="title">SEO Title</label>
+                    </div>
+                    <div class="input ltr">
+                        <input class="text fullwidth"  id="seoTitle" name="fields[seoTitle]" value="{{ item.seoTitle }}" style="width: 100%" placeholder="Defaults to Entry Title ({{ item.title }})">
+                    </div>
+                </div>
+
+                {# Description #}
+                <div class="field astuteo-reports__seo-entry__edit--col2">
+                    <div class="heading">
+                        <label for="title">SEO Description</label>
+                    </div>
+                    <div class="input ltr">
+                        <input class="text fullwidth" id="seoTitle" name="fields[seoDescription]" value="{{ item.seoDescription }}" style="width: 100%" placeholder="Auto generated from content">
+                    </div>
+                </div>
+                <div class="astuteo-reports__seo-entry__edit--col3">
+                    <input type="submit" value="Save Edits" class="btn">
+                </div>
+            </div>
+        </form>
+    </td>
+</tr>
