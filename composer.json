@@ -1,7 +1,7 @@
 {
   "name": "astuteo/reports",
   "description": "Reporting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "craft-plugin",
   "license": "MIT",
   "authors": [
@@ -23,6 +23,6 @@
   "extra": {
     "handle": "astuteo-reports",
     "name": "Astuteo Reports",
-    "documentationUrl": "https://github.com/developer/repo/blob/master/README.md"
+    "documentationUrl": "https://raw.githubusercontent.com/astuteollc/astuteo-reports/master/README.md"
   }
 }
